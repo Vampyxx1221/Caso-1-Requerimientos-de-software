@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="diseño.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel de Administración - Microsoft</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Panel de Administración</title>
 </head>
+
 <body class="dashboard-body">
 
-    <!-- Barra de Navegación Superior con estilo Admin -->
     <header class="navbar navbar-admin">
         <div class="navbar-brand">
             <div class="logo-small">
@@ -22,18 +21,13 @@
         </div>
         <div class="navbar-user">
             <span class="badge-admin">Administrador</span>
-            <a href="IniciarSesion.html" class="btn-logout">Cerrar Sesión</a>
         </div>
     </header>
 
     <!-- Contenido Principal -->
     <main class="main-container">
-        <div class="admin-header">
-            <h1>Gestión de Usuarios y Datos</h1>
-            <button class="btn-primary">+ Crear Nuevo Usuario</button>
-        </div>
-
-        <!-- Tabla de Gestión de Usuarios -->
+        
+        <!-- Tabla limpia lista para recibir datos de Python -->
         <div class="table-container">
             <table class="data-table">
                 <thead>
@@ -46,33 +40,16 @@
                         <th>Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>001</td>
-                        <td>eduardo_mg</td>
-                        <td>eduardo@estudiantec.cr</td>
-                        <td><span class="role-badge admin">Administrador</span></td>
-                        <td>Activo</td>
-                        <td>
-                            <button class="btn-action edit">Editar</button>
-                            <button class="btn-action delete">Eliminar</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>002</td>
-                        <td>carlos_hidalgo</td>
-                        <td>carlos@estudiantec.cr</td>
-                        <td><span class="role-badge user">Usuario</span></td>
-                        <td>Activo</td>
-                        <td>
-                            <button class="btn-action edit">Editar</button>
-                            <button class="btn-action delete">Eliminar</button>
-                        </td>
-                    </tr>
+                <!-- ID para que JS/Python inserte las filas dinámicamente -->
+                <tbody id="tabla-usuarios">
+                    <!-- Aquí se cargarán los datos de la BD -->
                 </tbody>
             </table>
         </div>
     </main>
 
+    <!-- Conexión con el archivo de lógica -->
+    <script src="app.js"></script>
 </body>
+
 </html>
