@@ -1,172 +1,240 @@
 // URL base de tu API Backend
 const API_URL = "http://localhost:5000/api"; 
 
-document.addEventListener("DOMContentLoaded", () => {
+//Método para transferir información 
+async function apiFetch(endpoint, method = "GET", data = null) {
+    const options = {
+          method,
+          headers: { "Content-Type": "application/json" }
+    };
+    if (data) options.body = JSON.stringify(data);
 
-    // 1. Manejo de Registro
+    const response = await fetch(`${API_URL}${endpoint}`, options);
+    const result = await response.json();
+
+    if (!response.ok) {
+        throw new Error(result.message || "Error en la petición");
+    }
+    return result;
+}
+//Redirecciona el dashboard según el tipo de usuario 
+function redirigirPorRol(role) {
+    if (role === "admin") {
+        window.location.href = "UsuarioAdministrador.html";
+    } else {
+        window.location.href = "UsuarioNormal.html";
+    }
+}
+
+
+
+//Método para el registro de usuarios 
+function registroUsuario() {
     const formRegistro = document.getElementById("form-registro");
-    if (formRegistro) {
-        formRegistro.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const data = {
-                username: e.target.username.value,
-                email: e.target.email.value,
-                password: e.target.password.value
-            };
+    if (!formRegistro) return;
 
-            try {
-                const response = await fetch(`${API_URL}/register`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                });
-                
-                const result = await response.json();
-                if (response.ok) {
-                    localStorage.setItem("user", JSON.stringify(result.user));
+    formRegistro.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = {
+            username: e.target.username.value,
+            email: e.target.email.value,
+            password: e.target.password.value
+        };
 
-                    // Redirigir directamente según el rol
-                    if (result.user.role === "admin") {
-                         window.location.href = "UsuarioAdministrador.html";
-                    } else {
-                         window.location.href = "UsuarioNormal.html";
-                }
-                } else {
-                    alert(result.message || "Error al registrar");
-                }
-            } catch (error) {
-                console.error("Error al conectar con el servidor:", error);
-            }
-        });
-    }
+        try {
+            const result = await apiFetch("/register", "POST", data);
+            localStorage.setItem("user", JSON.stringify(result.user));
+            redirigirPorRol(result.user.role);
+        } catch (error) {
+            alert(error.message);
+            console.error("Error al registrar:", error);
+        }
+    });
+}
 
-    // 2. Manejo de Inicio de Sesión
+//Método para el inicio de sesion 
+function iniciarSesion() {
     const formLogin = document.getElementById("form-login");
-    if (formLogin) {
-        formLogin.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            const data = {
-                username: e.target.username.value,
-                password: e.target.password.value
-            };
+    if (!formLogin) return;
 
-            try {
-                const response = await fetch(`${API_URL}/login`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                });
+    formLogin.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const data = {
+            username: e.target.username.value,
+            password: e.target.password.value
+        };
 
-                const result = await response.json();
-                if (response.ok) {
-                    // Guardar token/sesión en localStorage si aplica
-                    localStorage.setItem("user", JSON.stringify(result.user));
-                    
-                    // Redirección según el rol retornado por el backend
-                    if (result.user.role === "admin") {
-                        window.location.href = "UsuarioAdministrador.html";
-                    } else {
-                        window.location.href = "UsuarioNormal.html";
-                    }
-                } else {
-                    alert(result.message || "Credenciales incorrectas");
-                }
-            } catch (error) {
-                console.error("Error en la autenticación:", error);
-            }
-        });
-    }
+        try {
+            const result = await apiFetch("/login", "POST", data);
+            localStorage.setItem("user", JSON.stringify(result.user));
+            redirigirPorRol(result.user.role);
+        } catch (error) {
+            alert(error.message);
+            console.error("Error en la autenticación:", error);
+        }
+    });
+}
 
+//Método para recuperación, verificación y confirmación de contraseña 
+function nuevaContrasenna() {
+    // 1: Solicitar el código
     const formSolicitarCodigo = document.getElementById("form-solicitar-codigo");
     if (formSolicitarCodigo) {
         formSolicitarCodigo.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const data = { email: e.target.email.value };
+            const email = e.target.email.value;
+            localStorage.setItem("reset_email", email);
 
             try {
-                const response = await fetch(`${API_URL}/forgot-password`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    alert("Código enviado a su correo");
+                await apiFetch("/forgot-password", "POST", { email });
+                alert("Código enviado a su correo");
 
-                    const seccionVerificar = document.getElementById("seccion-verificar");
-                    if (seccionVerificar) {
-                        seccionVerificar.style.display = "block";
-                    }
-                } else {
-                    alert(result.message || "Error al solicitar código");
-                }
+                const seccionVerificar = document.getElementById("seccion-verificar");
+                if (seccionVerificar) seccionVerificar.style.display = "block";
             } catch (error) {
+                alert(error.message);
                 console.error("Error en la solicitud:", error);
             }
         });
     }
 
+    // 2: Verificar Código
     const formVerificarCodigo = document.getElementById("form-verificar-codigo");
     if (formVerificarCodigo) {
         formVerificarCodigo.addEventListener("submit", async (e) => {
             e.preventDefault();
-            const data = { code: e.target.code.value };
+            const code = e.target.code.value;
+            const email = localStorage.getItem("reset_email");
 
             try {
-                const response = await fetch(`${API_URL}/verify-code`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(data)
-                });
-                const result = await response.json();
-                if (response.ok) {
-                    alert("Código verificado correctamente");
-                } else {
-                    alert(result.message || "Código inválido");
-                }
+                await apiFetch("/verify-code", "POST", { email, code });
+                alert("Código verificado correctamente");
+                localStorage.setItem("reset_code", code);
+                window.location.href = "contraseñaNueva.html";
             } catch (error) {
+                alert(error.message);
                 console.error("Error al verificar código:", error);
             }
         });
     }
 
-    // 4. Cargar Tabla de Usuarios en el Panel de Administrador
-const tablaUsuarios = document.getElementById("tabla-usuarios");
-if (tablaUsuarios) {
-    fetch(`${API_URL}/users`)
-        .then(response => response.json())
-        .then(users => {
-            tablaUsuarios.innerHTML = "";
-            users.forEach(u => {
-                const fila = `
-                    <tr>
-                        <td>${u.id}</td>
-                        <td>${u.username}</td>
-                        <td>${u.email}</td>
-                        <td><span class="role-badge ${u.role}">${u.role}</span></td>
-                        <td>Activo</td>
-                        <td>
-                            <button class="btn-action edit">Editar</button>
-                            <button class="btn-action delete">Eliminar</button>
-                        </td>
-                    </tr>
-                `;
-                tablaUsuarios.innerHTML += fila;
-            });
-        })
-        .catch(error => console.error("Error al cargar la tabla de usuarios:", error));
+    // 3: Establecer Nueva Contraseña
+    const formSolicitarContraNueva = document.getElementById("form-solicitar-contra-nueva");
+    if (formSolicitarContraNueva) {
+        formSolicitarContraNueva.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const pass1 = document.getElementById("new-password").value;
+            const pass2 = document.getElementById("new-password-veri").value;
+
+            if (pass1 !== pass2) {
+                alert("Las contraseñas no coinciden. Por favor verifíquelas.");
+                return;
+            }
+
+            const data = {
+                email: localStorage.getItem("reset_email"),
+                code: localStorage.getItem("reset_code"),
+                new_password: pass1
+            };
+
+            try {
+                await apiFetch("/reset-password", "POST", data);
+                alert("¡Contraseña actualizada exitosamente! Inicie sesión nuevamente.");
+                localStorage.removeItem("reset_email");
+                localStorage.removeItem("reset_code");
+                window.location.href = "IniciarSesion.html";
+            } catch (error) {
+                alert(error.message);
+                console.error("Error al actualizar contraseña:", error);
+            }
+        });
+    }
 }
 
-    // 3. Cargar Datos en el Dashboard Normal
-    const infoUsername = document.getElementById("info-username");
-    if (infoUsername) {
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (user) {
-            document.getElementById("info-username").textContent = user.username;
-            document.getElementById("info-email").textContent = user.email;
-            document.getElementById("user-role").textContent = user.role;
-        } else {
-            window.location.href = "IniciarSesion.html";
+//Método para mostrar la tabla de usuarios
+async function mostrarUsuarios() {
+    const tablaUsuarios = document.getElementById("tabla-usuarios");
+    if (!tablaUsuarios) return;
+
+    try {
+        const users = await apiFetch("/users");
+        tablaUsuarios.innerHTML = "";
+        users.forEach(u => {
+            const fila = `
+                <tr>
+                    <td>${u.id}</td>
+                    <td>${u.username}</td>
+                    <td>${u.email}</td>
+                    <td>${u.password}</td>
+                    <td><span class="role-badge ${u.role}">${u.role}</span></td>
+                    <td>Activo</td>
+                    <td>
+                        <button class="btn-action edit" onclick="editarUsuario(${u.id}, '${u.username}', '${u.email}')">Editar</button>
+                        <button class="btn-action delete" onclick="eliminarUsuario(${u.id})">Eliminar</button>
+                    </td>
+                </tr>
+            `;
+            tablaUsuarios.innerHTML += fila;
+        });
+    } catch (error) {
+        console.error("Error al cargar la tabla de usuarios:", error);
+    }
+}
+
+//Métodos para las acciones de la tabla
+async function eliminarUsuario(id) {
+    if (confirm(`¿Está seguro de eliminar al usuario con ID ${id}?`)) {
+        try {
+            const result = await apiFetch(`/users/${id}`, "DELETE");
+            alert(result.message);
+            mostrarUsuarios(); // Recarga la tabla
+        } catch (error) {
+            alert(error.message);
         }
     }
+}
+async function editarUsuario(id, usernameActual, emailActual) {
+    const nuevoUsername = prompt("Nuevo nombre de usuario:", usernameActual);
+    const nuevoEmail = prompt("Nuevo correo electrónico:", emailActual);
+
+    if (nuevoUsername && nuevoEmail) {
+        try {
+            const result = await apiFetch(`/users/${id}`, "PUT", {
+                username: nuevoUsername,
+                email: nuevoEmail
+            });
+            alert(result.message);
+            mostrarUsuarios(); // Recarga la tabla
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+}
+
+//Método para mostrar información del usuario actual 
+function infoUsuario() {
+    const infoUsername = document.getElementById("info-username");
+    if (!infoUsername) return;
+
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+        document.getElementById("info-username").textContent = user.username;
+        document.getElementById("info-email").textContent = user.email;
+        document.getElementById("user-role").textContent = user.role;
+    } else {
+        window.location.href = "IniciarSesion.html";
+    }
+}
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    registroUsuario();
+    iniciarSesion();
+    nuevaContrasenna();
+    mostrarUsuarios();
+    infoUsuario();
 });
+
+

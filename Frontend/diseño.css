@@ -7,7 +7,7 @@
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
 }
 
-body {                           /*Modifica el cuerpo del html (ventana)*/
+body {                          /*Modifica el cuerpo del html (ventana)*/
     background-color: #b8f0ed;
     display: flex;
     justify-content: center;
@@ -15,7 +15,7 @@ body {                           /*Modifica el cuerpo del html (ventana)*/
     min-height: 100vh;
 }
 
-.cuadro {                       /*Clase cuadro hecha para tener la información del html*/
+.cuadro {                       /*Clase cuadro hecha para tener la información del html en un cuadro*/
     background-color: #F2F0EF;
     width: 100%;
     max-width: 440px;
@@ -96,7 +96,7 @@ input:focus {
     background-color: #005da6;
 }
 
-a {                            /*Modifica los elementos a del html*/
+a {                             /*Modifica los elementos a del html*/
     color: #0067b8;
     text-decoration: none;
     font-size: 0.875rem;
@@ -107,144 +107,110 @@ a:hover {
     text-decoration: underline;
 }
 
-
-/* Sobrescribe el centrado del body para los paneles */
-body.dashboard-body {
+body.dashboard-body {          /*Modifica las pantallas para la ventana Usuario y Admin*/
     display: block !important;
     background-color: #f3f2f1;
     min-height: 100vh;
-}
+} 
 
-/* Barra de Navegación Superior */
-.navbar {
+.navbar {                      /*Clase navbar para la barra superior de la página*/
     background-color: #0067b8;
     color: white;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 12px 24px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.40);
     width: 100%;
 }
-
 .navbar-brand {
     display: flex;
     align-items: center;
     gap: 12px;
     font-weight: 600;
 }
-
 .navbar-user {
     display: flex;
     align-items: center;
     gap: 16px;
 }
 
-.btn-logout {
-    color: white;
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 6px 12px;
-    border-radius: 2px;
-    font-size: 0.85rem;
-    text-decoration: none;
-}
-
-.btn-logout:hover {
-    background-color: rgba(255, 255, 255, 0.3);
-}
-
-/* Contenedor Principal */
-.main-container {
+.main-container {              /*Clase main-container para la informacion de usuario normal y administrador*/
     max-width: 1000px;
     margin: 40px auto;
     padding: 0 20px;
 }
 
-/* Tarjeta de Usuario Normal */
-.welcome-card {
+.welcome-card {                /*Clase welcome-card para la ventana Usuario normal*/
     background: white;
     padding: 30px;
     border-radius: 4px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-
 .welcome-card h1 {
     font-size: 1.8rem;
     margin-bottom: 10px;
 }
-
 .welcome-card p {
     color: #605e5c;
     margin-bottom: 20px;
 }
-
 .user-info-box {
     padding: 20px;
     background-color: #faf9f8;
     border-left: 4px solid #0067b8;
     border-radius: 2px;
 }
-
 .user-info-box ul {
     list-style: none;
     margin-top: 12px;
 }
-
 .user-info-box li {
     margin-bottom: 8px;
     font-size: 0.95rem;
     color: #323130;
 }
 
-/* Estilos de Tabla para Administrador */
-.admin-header {
+.admin-header {                /*Clase admin-header para la ventana Administrador*/
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 20px;
 }
-
 .table-container {
     background: white;
     padding: 20px;
     border-radius: 4px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
-
 .data-table {
     width: 100%;
     border-collapse: collapse;
 }
-
 .data-table th, .data-table td {
     padding: 12px 14px;
     text-align: left;
     border-bottom: 1px solid #e1dfdd;
     font-size: 0.9rem;
 }
-
 .data-table th {
     background-color: #faf9f8;
     font-weight: 600;
 }
-
 .role-badge, .badge-admin {
     padding: 4px 8px;
     border-radius: 3px;
     font-size: 0.8rem;
     font-weight: 600;
 }
-
 .role-badge.admin, .badge-admin {
     background-color: #0067b8;
     color: white;
 }
-
 .role-badge.user {
     background-color: #e1dfdd;
     color: #323130;
 }
-
 .btn-action {
     padding: 4px 8px;
     border: none;
@@ -252,6 +218,11 @@ body.dashboard-body {
     cursor: pointer;
     font-size: 0.8rem;
 }
-
-.btn-action.edit { background-color: #fff0c2; color: #323130; }
-.btn-action.delete { background-color: #fde8e8; color: #a80000; }
+.btn-action.edit { 
+background-color: #fff0c2; 
+color: #323130; 
+}
+.btn-action.delete { 
+background-color: #fde8e8;
+ color: #a80000; 
+ }

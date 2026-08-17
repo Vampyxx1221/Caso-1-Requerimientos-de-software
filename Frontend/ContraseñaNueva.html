@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang = "es">
+<head>
+    <meta charset = "UTF-8">
+    <link rel="stylesheet" href="diseño.css">
+    <title>Nueva contraseña</title>
+    
+</head>
+
+<body>
+
+    <div class = "cuadro">
+        <h1>Cambio de Contraseña</h1>
+        <hr>
+
+        <form id = "form-solicitar-contra-nueva">
+            <div class = "field">
+                <label for>Ingrese su contraseña nueva: </label>
+                <input type = "password"
+                       id = "new-password"
+                      name = "password" 
+                required>
+            </div>
+
+            <div class = "field">
+                <label>Confirmar contraseña nueva: </label>
+                   <input type = "password"
+                          id = "new-password-veri"
+                          name = "password" 
+                required>
+            </div>
+            <button type = "submit" class = "btn-primary">Guardar contraseña</button>
+
+        </form>
+
+    <!--- Conexión con el archivo de javaScript para capturar los datos-->
+    <script src="main.js"></script>
+
+</body>
