@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="diseño.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Usuario - Microsoft</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Barra de Navegación Superior -->
+    <header class="navbar">
+        <div class="navbar-brand">
+            <!-- Logo Microsoft -->
+            <div class="logo-small">
+                <div class="sq sq-1"></div>
+                <div class="sq sq-2"></div>
+                <div class="sq sq-3"></div>
+                <div class="sq sq-4"></div>
+            </div>
+            <span>Sistema Autentificador</span>
+        </div>
+        <div class="navbar-user">
+            <span>Usuario Estándar</span>
+            <a href="IniciarSesion.html" class="btn-logout">Cerrar Sesión</a>
+        </div>
+    </header>
+
+    <!-- Contenido Principal -->
+    <main class="main-container">
+        <div class="welcome-card">
+            <h1>¡Lograste entrar!</h1>
+            <p>Bienvenido al sistema. Tu cuenta tiene permisos de <strong>Usuario Estándar</strong>.</p>
+            
+            <div class="user-info-box">
+                <h3>Información de tu sesión:</h3>
+                <ul>
+                    <li><strong>Estado:</strong> Autenticado correctamente</li>
+                    <li><strong>Rol asignado:</strong> User</li>
+                    <li><strong>Acceso a gestión:</strong> Restringido (Solo lectura)</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

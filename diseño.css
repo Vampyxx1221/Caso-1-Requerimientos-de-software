@@ -1,0 +1,108 @@
+@import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;600&display=swap');
+
+* {                             /*Modifica la estructura de todos los html*/
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+}
+
+body {                           /*Modifica el cuerpo del html (ventana)*/
+    background-color: #b8f0ed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.cuadro {                       /*Clase cuadro hecha para tener la información del html*/
+    background-color: #F2F0EF;
+    width: 100%;
+    max-width: 440px;
+    padding: 40px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    border-radius: 2px;
+}
+
+h1 {                            /*Modifica los elementos h1 del html*/
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #1b1b1b;
+    margin-bottom: 20px;
+}
+
+h2 {                           /*Modifica los elementos h2 del html*/
+    font-size: 1rem;
+    font-weight: 600;
+    color: #323130;
+    margin: 16px 0 8px 0;
+}
+
+hr {                           /*Modifica los elementos hr del html*/
+    border: none;
+    border-top: 1px solid #e1dfdd;
+    margin: 20px 0;
+}
+
+.field {                       /*Elementos para el diseño de los label e inputs de la página*/
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+label {  
+    font-size: 0.875rem;
+    color: #323130;
+    margin-bottom: 6px;
+    font-weight: 600;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+select {
+    width: 100%;
+    padding: 8px 10px;
+    font-size: 0.95rem;
+    border: 1px solid #8a8886;
+    border-radius: 2px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+input:focus, select:focus {
+    border-color: #0067b8;
+    box-shadow: 0 0 0 1px #0067b8;
+}
+
+
+.btn-primary, .btn {               /*Elementos de diseño para los botones de la página*/
+    display: inline-block;
+    text-align: center;
+    background-color: #0067b8;
+    color: #ffffff;
+    border: none;
+    padding: 8px 20px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    border-radius: 2px;
+    transition: background-color 0.2s ease;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.btn-primary:hover, .btn:hover {
+    background-color: #005da6;
+}
+
+a {
+    color: #0067b8;
+    text-decoration: none;
+    font-size: 0.875rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
