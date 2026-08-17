@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang = "es">
 <head>
     <meta charset = "UTF-8">
     <link rel="stylesheet" href="diseño.css">
@@ -12,30 +12,34 @@
     <div class = "cuadro">
         <h1>Iniciar Sesión</h1>
 
-    <form>
-        <div class = "field">
-            <label>Usuario</label>
-            <input type = "text" 
-                   name = "Usuario"
-            required>
-        </div>
+        <form id = "form-login">
+            <div class = "field">
+                <label for = "login-username">Usuario</label>
+                <input type = "text" 
+                       id = "login-username"
+                       name = "username"
+                required>
+            </div>
 
-        <div class = "field">
-            <label>Contraseña</label>
-            <input type = "password" 
-                   name = "Contraseña"
-            required> 
-        </div>
+           <div class = "field">
+                <label for = "login-password">Contraseña</label>
+                <input type = "password" 
+                       id = "login-password"
+                       name = "password"
+                required> 
+            </div>
 
-        <button type = "submit" class = "btn-primary">Enviar</button>
+            <button type = "submit" class = "btn-primary">Enviar</button>
 
-    </form>
+        </form>
     
-    <hr>
-
-    <h2>¿Olvidó su contraseña?</h2>
-     <a href = "RecuperacionContraseña.html">Presione aquí</a>
+        <hr>
+        <h2>¿Olvidó su contraseña?</h2>
+        <a href = "RecuperacionContraseña.html">Presione aquí</a>
 
     </div>
+
+    <!--- Conexión con el archivo de javaScript para capturar los datos-->
+    <script src="main.js"></script>
 
 </body>
