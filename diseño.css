@@ -7,7 +7,7 @@
     font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
 }
 
-body {                           /*Modifica el cuerpo del html (ventana)*/
+body {                           /*Modifica el cuerpo del html (ventana     )*/
     background-color: #b8f0ed;
     display: flex;
     justify-content: center;
