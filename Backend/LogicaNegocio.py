@@ -1,6 +1,8 @@
 import os 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash
+
 
 ############################ Debe ejecutarse por terminal de la carpeta " python LogicaNegocio.py " 
 
@@ -38,7 +40,7 @@ def registro():
         "id": len(usuarios_db) + 1,
         "username": username,
         "email": email,
-        "password": password,
+        "password": generate_password_hash(password),
         "role": "user"
     }
     
@@ -63,7 +65,7 @@ def inicio_sesion():
 
     # Buscar usuario en la lista
     for u in usuarios_db:
-        if u['username'] == username and u['password'] == password:
+        if u['username'] == username and check_password_hash(u['password'], password):
             print("Sesión iniciada para: {username}")
             return jsonify({
                 "message": "Inicio de sesión exitoso",
@@ -103,7 +105,7 @@ def cambiar_contrasenna():
     # Buscar al usuario por correo y actualizar la contraseña en la BD temporal
     for u in usuarios_db:
         if u['email'] == email:
-            u['password'] = new_password
+            u['password'] = generate_password_hash(new_password)
             print(f"Contraseña actualizada para {email}")
             return jsonify({"message": "Contraseña actualizada exitosamente"}), 200
 
@@ -118,7 +120,7 @@ def get_usuarios():
             "id": u["id"],
             "username": u["username"],
             "email": u["email"],
-            "password": u["password"],
+            "password": "*************", #u["password"],
             "role": u["role"]
         }
         for u in usuarios_db
