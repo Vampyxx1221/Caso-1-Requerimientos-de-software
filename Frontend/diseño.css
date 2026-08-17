@@ -20,7 +20,7 @@ body {                           /*Modifica el cuerpo del html (ventana)*/
     width: 100%;
     max-width: 440px;
     padding: 40px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.75);
     border-radius: 2px;
 }
 
@@ -29,38 +29,39 @@ h1 {                            /*Modifica los elementos h1 del html*/
     font-weight: 600;
     color: #1b1b1b;
     margin-bottom: 20px;
+    text-align: center;
 }
 
-h2 {                           /*Modifica los elementos h2 del html*/
+h2 {                            /*Modifica los elementos h2 del html*/
     font-size: 1rem;
     font-weight: 600;
     color: #323130;
     margin: 16px 0 8px 0;
+    text-align: center;
 }
 
-hr {                           /*Modifica los elementos hr del html*/
+hr {                            /*Modifica los elementos hr del html*/
     border: none;
     border-top: 1px solid #e1dfdd;
     margin: 20px 0;
 }
 
-.field {                       /*Elementos para el diseño de los label e inputs de la página*/
+.field {                        /*Clase field para el texto encima del input*/
     margin-bottom: 18px;
     display: flex;
     flex-direction: column;
 }
 
-label {  
+label {                         /*Modifica los elementos label del html*/
     font-size: 0.875rem;
     color: #323130;
     margin-bottom: 6px;
     font-weight: 600;
 }
 
-input[type="text"],
+input[type="text"],             /*Modifica los elementos inputs del html*/
 input[type="email"],
-input[type="password"],
-select {
+input[type="password"] {
     width: 100%;
     padding: 8px 10px;
     font-size: 0.95rem;
@@ -69,14 +70,13 @@ select {
     outline: none;
     transition: border-color 0.2s;
 }
-
-input:focus, select:focus {
+input:focus {
     border-color: #0067b8;
     box-shadow: 0 0 0 1px #0067b8;
 }
 
 
-.btn-primary, .btn {               /*Elementos de diseño para los botones de la página*/
+.btn-primary, .btn {            /*Modifica los elementos botones del html*/
     display: inline-block;
     text-align: center;
     background-color: #0067b8;
@@ -92,25 +92,21 @@ input:focus, select:focus {
     width: 100%;
     margin-top: 8px;
 }
-
 .btn-primary:hover, .btn:hover {
     background-color: #005da6;
 }
 
-a {
+a {                            /*Modifica los elementos a del html*/
     color: #0067b8;
     text-decoration: none;
     font-size: 0.875rem;
+    display: block;
+    text-align: center;
 }
-
 a:hover {
     text-decoration: underline;
 }
 
-
-/* ===================================================
-   ESTILOS PARA DASHBOARD (Usuario y Administrador)
-   =================================================== */
 
 /* Sobrescribe el centrado del body para los paneles */
 body.dashboard-body {

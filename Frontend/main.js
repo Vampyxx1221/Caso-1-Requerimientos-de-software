@@ -23,8 +23,14 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 const result = await response.json();
                 if (response.ok) {
-                    alert("Usuario registrado con éxito");
-                    window.location.href = "IniciarSesion.html";
+                    localStorage.setItem("user", JSON.stringify(result.user));
+
+                    // Redirigir directamente según el rol
+                    if (result.user.role === "admin") {
+                         window.location.href = "UsuarioAdministrador.html";
+                    } else {
+                         window.location.href = "UsuarioNormal.html";
+                }
                 } else {
                     alert(result.message || "Error al registrar");
                 }
@@ -86,6 +92,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const result = await response.json();
                 if (response.ok) {
                     alert("Código enviado a su correo");
+
+                    const seccionVerificar = document.getElementById("seccion-verificar");
+                    if (seccionVerificar) {
+                        seccionVerificar.style.display = "block";
+                    }
                 } else {
                     alert(result.message || "Error al solicitar código");
                 }
@@ -118,6 +129,33 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // 4. Cargar Tabla de Usuarios en el Panel de Administrador
+const tablaUsuarios = document.getElementById("tabla-usuarios");
+if (tablaUsuarios) {
+    fetch(`${API_URL}/users`)
+        .then(response => response.json())
+        .then(users => {
+            tablaUsuarios.innerHTML = "";
+            users.forEach(u => {
+                const fila = `
+                    <tr>
+                        <td>${u.id}</td>
+                        <td>${u.username}</td>
+                        <td>${u.email}</td>
+                        <td><span class="role-badge ${u.role}">${u.role}</span></td>
+                        <td>Activo</td>
+                        <td>
+                            <button class="btn-action edit">Editar</button>
+                            <button class="btn-action delete">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+                tablaUsuarios.innerHTML += fila;
+            });
+        })
+        .catch(error => console.error("Error al cargar la tabla de usuarios:", error));
+}
 
     // 3. Cargar Datos en el Dashboard Normal
     const infoUsername = document.getElementById("info-username");

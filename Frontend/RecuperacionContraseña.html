@@ -25,21 +25,22 @@
             <button type = "submit" class="btn-primary">Enviar Código</button>
         </form>
     
-        <hr>
+        <div id = "seccion-verificar" style = "display: none;">
+            <hr>
+            <h2> Ingrese el código que se le envió</h2>
 
-        <h2> Ingrese el código que se le envió</h2>
+            <form id = "form-verificar-codigo">
+                <div class = "field">
+                    <label for = "recover-code">Codigo</label>
+                    <input type = "text"
+                           id = "recover-code"
+                           name = "code" 
+                    required>
+                </div>
+                <button type = "submit" class = "btn-primary">Verificar</button>
+            </form>
+        </div>
 
-        <form id = "form-verificar-codigo">
-            <div class = "field">
-                <label for = "recover-code">Codigo</label>
-                <input type = "text"
-                       id = "recover-code"
-                       name = "code" 
-                required>
-            </div>
-            <button type = "submit" class = "btn-primary">Verificar</button>
-        </form>
-    </div>
 
     <!--- Conexión con el archivo de javaScript para capturar los datos-->
     <script src="main.js"></script>
