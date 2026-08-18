@@ -29,8 +29,8 @@ function redirigirPorRol(role) {
 
 //Método para validar la fortaleza de la contraseña
 function validarPassword(password) {
-    // Al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial
-    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]{8,}$/;
+    // Permite cualquier carácter especial de la lista extendida
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_\-+=\\/<>{}\[\]()~^|:;,])[A-Za-z\d@$!%*?&.#_\-+=\\/<>{}\[\]()~^|:;,]{8,}$/;
     return regex.test(password);
 }
 

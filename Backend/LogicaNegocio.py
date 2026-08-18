@@ -6,7 +6,6 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from werkzeug.security import generate_password_hash, check_password_hash
 
-
 ############################ Debe ejecutarse por terminal de la carpeta " python LogicaNegocio.py " 
 
 negocio = Flask(__name__)
@@ -18,8 +17,8 @@ codigos_recuperacion = {}
 #Configuración del entorno para correo y Método para envio de correo (SMTP)
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-SENDER_EMAIL = "edumg1221@gmail.com"             # Coloca aquí tu correo
-SENDER_PASSWORD = "fpxt yrry knxc qjvk"          # Coloca aquí tu Contraseña de Aplicación
+SENDER_EMAIL = "loginsys1221@gmail.com"          # Coloca aquí tu correo
+SENDER_PASSWORD = "gwjv kzrj jjwy fezy"          # Coloca aquí tu Contraseña de Aplicación
 
 def enviar_email(destinatario, codigo):
     asunto = "Código de Recuperación de Contraseña"
