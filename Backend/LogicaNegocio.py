@@ -1,3 +1,4 @@
+#Librerias importadas
 import os 
 import random
 import smtplib
