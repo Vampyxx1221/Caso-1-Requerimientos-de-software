@@ -27,6 +27,12 @@ function redirigirPorRol(role) {
 }
 
 
+//Método para validar la fortaleza de la contraseña
+function validarPassword(password) {
+    // Al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&.#_-])[A-Za-z\d@$!%*?&.#_-]{8,}$/;
+    return regex.test(password);
+}
 
 //Método para el registro de usuarios 
 function registroUsuario() {
@@ -35,10 +41,17 @@ function registroUsuario() {
 
     formRegistro.addEventListener("submit", async (e) => {
         e.preventDefault();
+        const password = e.target.password.value;
+
+        if (!validarPassword(password)) {
+            alert("La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.");
+            return;
+        }
+
         const data = {
             username: e.target.username.value,
             email: e.target.email.value,
-            password: e.target.password.value
+            password: password
         };
 
         try {
@@ -87,7 +100,7 @@ function nuevaContrasenna() {
 
             try {
                 await apiFetch("/forgot-password", "POST", { email });
-                alert("Código enviado a su correo");
+                alert("Código enviado exitosamente a su correo");
 
                 const seccionVerificar = document.getElementById("seccion-verificar");
                 if (seccionVerificar) seccionVerificar.style.display = "block";
@@ -129,6 +142,11 @@ function nuevaContrasenna() {
 
             if (pass1 !== pass2) {
                 alert("Las contraseñas no coinciden. Por favor verifíquelas.");
+                return;
+            }
+
+            if (!validarPassword(pass1)) {
+                alert("La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula, un número y un carácter especial.");
                 return;
             }
 
