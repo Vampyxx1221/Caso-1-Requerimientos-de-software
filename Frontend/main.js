@@ -123,7 +123,7 @@ function nuevaContrasenna() {
                 await apiFetch("/verify-code", "POST", { email, code });
                 alert("Código verificado correctamente");
                 localStorage.setItem("reset_code", code);
-                window.location.href = "contraseñaNueva.html";
+                window.location.href = "ContraseñaNueva.html";
             } catch (error) {
                 alert(error.message);
                 console.error("Error al verificar código:", error);
@@ -179,6 +179,10 @@ async function mostrarUsuarios() {
         const users = await apiFetch("/users");
         tablaUsuarios.innerHTML = "";
         users.forEach(u => {
+            const estadoTexto = u.is_active ? "Activo" : "Inactivo / Bloqueado";
+            const claseEstado = u.is_active ? "active" : "inactive";
+            const btnEstadoTexto = u.is_active ? "Inactivar" : "Activar";
+
             const fila = `
                 <tr>
                     <td>${u.id}</td>
@@ -186,9 +190,10 @@ async function mostrarUsuarios() {
                     <td>${u.email}</td>
                     <td>${u.password}</td>
                     <td><span class="role-badge ${u.role}">${u.role}</span></td>
-                    <td>Activo</td>
+                    <td><span class="status-badge ${claseEstado}">${estadoTexto}</span></td>
                     <td>
                         <button class="btn-action edit" onclick="editarUsuario(${u.id}, '${u.username}', '${u.email}')">Editar</button>
+                        <button class="btn-action toggle" onclick="cambiarEstadoUsuario(${u.id}, ${!u.is_active})">${btnEstadoTexto}</button>
                         <button class="btn-action delete" onclick="eliminarUsuario(${u.id})">Eliminar</button>
                     </td>
                 </tr>
@@ -227,6 +232,15 @@ async function editarUsuario(id, usernameActual, emailActual) {
         } catch (error) {
             alert(error.message);
         }
+    }
+}
+async function cambiarEstadoUsuario(id, nuevoEstado) {
+    try {
+        const result = await apiFetch(`/users/${id}/toggle-status`, "PATCH", { is_active: nuevoEstado });
+        alert(result.message);
+        mostrarUsuarios();
+    } catch (error) {
+        alert(error.message);
     }
 }
 

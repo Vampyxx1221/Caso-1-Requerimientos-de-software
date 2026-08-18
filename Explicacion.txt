@@ -1,0 +1,13 @@
+Frontend -> html,css y javascript (Maneja el esqueleto, diseño e interacción de las ventanas)
+
+Backend -> Phyton (Libreria Python Flask: Utilizada para construir APIs de forma sencilla y rápida
+                   Libreria smtplib, email.mime.text y random: Utilizada para el manejo de correos 
+                   Libreria flask_sqlalchemy: Permite manejar los objetos como tablas para la bd
+                   Libreria werkzeug.security: Permite la encriptación y verificación de las contraseñas de forma segura
+                   )
+
+Almacenamiento -> SQLite (SABD relacional que guarda la información en un solo archivo en el dispositivo)
+
+
+----- Para ejecutar abres la terminar en la carpeta donde esta "LogicaNegocio.py" y ejecutas el comando "python LogicaNegocio.py"
+
